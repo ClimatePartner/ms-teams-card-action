@@ -11,10 +11,14 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
+    - name: Install pnpm
+      shell: bash
+      run: npm install -g pnpm@8
+
     - uses: actions/checkout@v4
     - run: |
-        npm install
-        npm run all
+        pnpm install
+        pnpm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
