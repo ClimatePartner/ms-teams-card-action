@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Microsoft Teams Deploy Card",
   "main": "index.ts",
-  "repository": "https://github.com/climatepartner/ms-teams-card-action",
+  "repository": "https://github.com/ClimatePartner/ms-teams-card-action",
   "author": "",
   "license": "MIT",
   "private": false,
