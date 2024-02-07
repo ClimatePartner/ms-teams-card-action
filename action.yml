@@ -17,7 +17,7 @@ inputs:
     description: 'Color of notification header line'
     required: true 
   timezone:
-    description: 'Timezone (ex. America/Denver)'
+    description: 'Timezone (ex. Europe/Berlin)'
     required: false
 runs:
   using: 'node20'

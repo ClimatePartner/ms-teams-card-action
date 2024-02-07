@@ -10,13 +10,14 @@ export function createMessageCard(
   repoUrl: string,
   timestamp: string
 ): any {
-  let avatar_url =
-    'https://www.gravatar.com/avatar/05b6d8cc7c662bf81e01b39254f88a48?d=identicon'
+  let avatar_url = 'https://assets.climatepartner.com/latest/logos/logo.svg'
+
   if (author) {
     if (author.avatar_url) {
       avatar_url = author.avatar_url
     }
   }
+
   let author_url = ''
   if (author) {
     if (author.login && author.html_url) {
@@ -31,7 +32,7 @@ export function createMessageCard(
     title: notificationSummary,
     sections: [
       {
-        activityTitle: `**CI #${runNum} (commit ${sha.substr(
+        activityTitle: `**CI #${runNum} (commit ${sha.substring(
           0,
           7
         )})** on [${repoName}](${repoUrl})`,

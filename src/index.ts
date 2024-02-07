@@ -1,8 +1,12 @@
 import * as core from '@actions/core'
 import {Octokit} from '@octokit/rest'
-import axios from 'axios'
-import moment from 'moment-timezone'
+import dayjs from 'dayjs'
 import {createMessageCard} from './message-card'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 async function run(): Promise<void> {
   try {
@@ -16,7 +20,7 @@ async function run(): Promise<void> {
     const notificationColor = core.getInput('notification-color') || '0b93ff'
     const timezone = core.getInput('timezone') || 'UTC'
 
-    const timestamp = moment()
+    const timestamp = dayjs()
       .tz(timezone)
       .format('dddd, MMMM Do YYYY, h:mm:ss a z')
 
@@ -47,17 +51,24 @@ async function run(): Promise<void> {
 
     console.log(messageCard)
 
-    axios
-      .post(msTeamsWebhookUri, messageCard)
-      .then(function (response) {
-        console.log(response)
-        core.debug(response.data)
-      })
-      .catch(function (error) {
-        core.debug(error)
-      })
+    const response = await fetch(msTeamsWebhookUri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(messageCard)
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(`Failed to send message: ${errorText}`)
+    }
+
+    const responseData = await response.json()
+    console.log(responseData)
+    core.debug(responseData)
   } catch (error) {
-    console.log(error)
+    console.error(error)
     core.setFailed(error.message)
   }
 }
