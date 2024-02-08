@@ -33,19 +33,20 @@ export function createMessageCard(
       }
     ],
     potentialAction: [
-      createAction('View Workflow Run', `${repoUrl}/actions/runs/${runId}`),
-      createAction('View Commit Changes', commit.data.html_url)
+      {
+        '@context': 'http://schema.org',
+        target: [`${repoUrl}/actions/runs/${runId}`],
+        '@type': 'ViewAction',
+        name: 'View Workflow Run'
+      },
+      {
+        '@context': 'http://schema.org',
+        target: [commit.data.html_url],
+        '@type': 'ViewAction',
+        name: 'View Commit Changes'
+      }
     ]
   }
 
   return messageCard
-}
-
-function createAction(name: string, target: string): any {
-  return {
-    '@context': 'http://schema.org',
-    target: [target],
-    '@type': 'ViewAction',
-    name
-  }
 }
