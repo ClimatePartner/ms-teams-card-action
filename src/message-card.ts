@@ -33,7 +33,7 @@ export function createMessageCard(
       }
     ],
     potentialAction: [
-      createAction('View Workflow Run', `${repoUrl}/actions/runs/${runNum}`),
+      createAction('View Workflow Run', `${repoUrl}/actions/runs/${runId}`),
       createAction('View Commit Changes', commit.data.html_url)
     ]
   }
